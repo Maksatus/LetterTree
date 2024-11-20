@@ -21,7 +21,7 @@ namespace Runtime.Systems
             foreach (var entity in _filter)
             {
                 ref var dataComponent = ref entity.GetComponent<DataComponent>();
-                Init(dataComponent.relativePath);
+                Init(dataComponent.RelativePath);
             }
         }
 

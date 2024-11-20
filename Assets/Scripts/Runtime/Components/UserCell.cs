@@ -1,5 +1,5 @@
-using Runtime.Providers;
 using Scellecs.Morpeh;
+using TMPro;
 using Unity.IL2CPP.CompilerServices;
 using UnityEngine;
 
@@ -9,10 +9,9 @@ namespace Runtime.Components
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
-    public struct DataComponent : IComponent
+    public struct UserCell : IComponent 
     {
-        public string RelativePath;
-        public UserProvider UserProvider;
-        public Transform RootUsers;
+        public TMP_Text Name;
+        public GameObject[] Stars;
     }
 }
