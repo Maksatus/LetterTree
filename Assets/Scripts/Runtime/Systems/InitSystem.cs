@@ -15,15 +15,27 @@ namespace Runtime.Systems
         
         public override void OnAwake()
         {
+            var readExelSystem = new ReadExelSystem();
+            var generatorNameListSystem = new GeneratorNameListSystem();
+            
             _systemsGroup = World.CreateSystemsGroup();
-            _systemsGroup.AddSystem(new ReadExelSystem());
-            _systemsGroup.AddSystem(new GeneratorNameListSystem());
+            _systemsGroup.AddInitializer(readExelSystem);
+            _systemsGroup.AddInitializer(generatorNameListSystem);
             _systemsGroup.Initialize();
+            
+            _systemsGroup.RemoveInitializer(readExelSystem);
+            _systemsGroup.RemoveInitializer(generatorNameListSystem);
         }
 
         public override void OnUpdate(float deltaTime)
         {
             _systemsGroup.Update(deltaTime);
+        }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+            World.RemoveSystemsGroup(_systemsGroup);
         }
     }
 }

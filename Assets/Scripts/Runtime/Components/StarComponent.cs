@@ -1,4 +1,3 @@
-using Runtime.Providers;
 using Scellecs.Morpeh;
 using TMPro;
 using Unity.IL2CPP.CompilerServices;
@@ -10,10 +9,11 @@ namespace Runtime.Components
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
-    public struct UserCell : IComponent 
+    public struct StarComponent : IComponent
     {
-        public TMP_Text Name;
-        public Transform RootStarsTransform;
-        public StarComponent[] Stars;
+        public GameObject RootGameObject;
+        public GameObject LetterGameObject;
+        public TMP_Text LetterText;
+        public Transform RootTransform;
     }
 }

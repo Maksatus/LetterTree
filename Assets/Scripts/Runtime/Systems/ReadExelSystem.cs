@@ -10,18 +10,19 @@ namespace Runtime.Systems
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
-    public class ReadExelSystem : ISystem
+    public class ReadExelSystem : IInitializer
     {
         public World World { get; set; }
         private Filter _filter;
 
         public void OnAwake()
         {
-            _filter = World.Filter.With<DataComponent>().Build();
+            _filter = World.Filter.With<GeneralGameDataComponent>().Build();
             foreach (var entity in _filter)
             {
-                ref var dataComponent = ref entity.GetComponent<DataComponent>();
+                ref var dataComponent = ref entity.GetComponent<GeneralGameDataComponent>();
                 Init(dataComponent.RelativePath);
+                break;
             }
         }
 
@@ -65,12 +66,7 @@ namespace Runtime.Systems
             }
         }
 
-        public void OnUpdate(float deltaTime)
-        {
-        }
 
-        public void Dispose()
-        {
-        }
+        public void Dispose() { }
     }
 }

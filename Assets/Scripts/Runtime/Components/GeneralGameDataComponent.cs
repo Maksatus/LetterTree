@@ -9,10 +9,12 @@ namespace Runtime.Components
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
-    public struct DataComponent : IComponent
+    public struct GeneralGameDataComponent : IComponent
     {
         public string RelativePath;
-        public UserProvider UserProvider;
+        public UserProvider RefUserProvider;
         public Transform RootUsers;
+        public StarProvider RefStar;
+        public string Chars;
     }
 }
