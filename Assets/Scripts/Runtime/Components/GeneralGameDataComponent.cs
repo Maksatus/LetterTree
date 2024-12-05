@@ -12,9 +12,21 @@ namespace Runtime.Components
     public struct GeneralGameDataComponent : IComponent
     {
         public string RelativePath;
+        public string OutputPathFile;
         public UserProvider RefUserProvider;
         public Transform RootUsers;
         public StarProvider RefStar;
-        public string Chars;
+        [SerializeField] private string Chars;
+        public ParticleSystem VfxStars;
+
+        public char GetChar(int index)
+        {
+            return Chars[index];
+        }
+        
+        public int GetLengthChars()
+        {
+            return Chars.Length;
+        }
     }
 }

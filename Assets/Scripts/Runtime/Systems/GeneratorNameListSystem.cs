@@ -44,15 +44,16 @@ namespace Runtime.Systems
             foreach (var entityUser in _filterUser)
             {
                 ref var userComponent = ref entityUser.GetComponent<UserComponent>();
-                var entityProvider = usersResult[i].GetComponent<UserProvider>();
+                var entityProvider = usersResult[i];
                 ref var dataUserCell = ref entityProvider.GetData();
+                entityProvider.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
                 dataUserCell.Name.text = userComponent.Name;
                 totalLetter += userComponent.TotalLetter;
                 entityUser.MigrateTo(entityProvider.Entity);
                 i++;
             }
-            var rootUsers = _data.RootUsers;
-            _stars = Object.InstantiateAsync(data.RefStar, totalLetter, rootUsers);
+          
+            _stars = Object.InstantiateAsync(data.RefStar, totalLetter, _data.RootUsers);
             _stars.completed += FillStarsUsers;
         }
 
@@ -70,24 +71,35 @@ namespace Runtime.Systems
             {
                 ref var userComponent = ref entityUser.GetComponent<UserComponent>();
                 ref var userCell = ref entityUser.GetComponent<UserCell>();
-                
-                userCell.Stars = new StarComponent[userComponent.TotalLetter];
 
                 for (var index = 0; index < userComponent.TotalLetter; index++)
                 {
-                    var starProvider = starsResult[starIndex++];
-                    userCell.Stars[index] = starProvider.GetData();
-                    userCell.Stars[index].RootTransform.SetParent(userCell.RootStarsTransform);
-                    //userCell.Stars[index].LetterGameObject.SetActive(false);
-                    userCell.Stars[index].LetterText.text = _data.Chars[Random.Range(0, _data.Chars.Length)].ToString();
-                    
-                    
-                    //starProvider.Entity.MigrateTo(entityUser);
-                    starProvider.Entity.Dispose();
+                    var starEntity = starsResult[starIndex++];
+                    ref var data = ref starEntity.GetData();
+                    starEntity.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+                    var indexChar = Random.Range(0, _data.GetLengthChars());
+                    var letter = _data.GetChar(indexChar);
+                    data.RootTransform.SetParent(userCell.RootStarsTransform);
+                    data.LetterGameObject.SetActive(false);
+                    data.indexChar = indexChar;
+                    data.LetterText.text = letter.ToString();
+                    userCell.Stars.Add(data);
                 }
             }
+            
+            var writeExelSystem = new WriteExelSystem();
+            var systemsGroup = World.CreateSystemsGroup();
+            systemsGroup.AddInitializer(writeExelSystem);
+            systemsGroup.Initialize();
+            systemsGroup.RemoveInitializer(writeExelSystem);
         }
-        
-        public void Dispose() { }
+
+        public void Dispose()
+        {
+            _filterUser = null;
+            _generalGameDataComponent = null;
+            _users = null;
+            _stars = null;
+        }
     }
 }

@@ -11,9 +11,17 @@ namespace Runtime.Components
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
     public struct StarComponent : IComponent
     {
-        public GameObject RootGameObject;
         public GameObject LetterGameObject;
         public TMP_Text LetterText;
-        public Transform RootTransform;
+        public RectTransform RootTransform;
+        public int indexChar;
+        public AnimationFlightParameters AnimationFlightParameters;
+    }
+
+    public struct AnimationFlightParameters
+    {
+        public Vector3 FinishPosition;
+        public GameObject Letter;
+        public RectTransform RootTransform;
     }
 }

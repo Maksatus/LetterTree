@@ -17,18 +17,14 @@ namespace Runtime.Systems
 
         public void OnAwake()
         {
-            _filter = World.Filter.With<GeneralGameDataComponent>().Build();
-            foreach (var entity in _filter)
-            {
-                ref var dataComponent = ref entity.GetComponent<GeneralGameDataComponent>();
-                Init(dataComponent.RelativePath);
-                break;
-            }
+            ref var dataComponent = ref World.Filter.With<GeneralGameDataComponent>().Build().First()
+                .GetComponent<GeneralGameDataComponent>();
+            Init(ref dataComponent);
         }
 
-        private void Init(string relativePath)
+        private void Init(ref GeneralGameDataComponent dataComponent)
         {
-            var filePath = Path.Combine(Application.dataPath, "..", relativePath);
+            var filePath = Path.Combine(Application.dataPath, "..", dataComponent.RelativePath);
             var rows = new List<List<string>>();
 
             if (File.Exists(filePath))
@@ -61,12 +57,18 @@ namespace Runtime.Systems
             using var sr = new StreamReader(filePath);
             while (sr.ReadLine() is { } line)
             {
-                var fields = line.Split(',');
-                rows.Add(new List<string>(fields));
+                var fields = line.Split(';',',');
+                if (fields.Length < 2)
+                {
+                    Debug.LogWarning($"Неверный формат строки: {line}");
+                }
+
+                rows.Add(new List<string> { fields[0].Trim(), fields[1].Trim() });
             }
         }
-
-
-        public void Dispose() { }
+        
+        public void Dispose()
+        {
+        }
     }
 }

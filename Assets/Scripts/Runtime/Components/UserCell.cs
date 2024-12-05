@@ -1,4 +1,4 @@
-using Runtime.Providers;
+using System.Collections.Generic;
 using Scellecs.Morpeh;
 using TMPro;
 using Unity.IL2CPP.CompilerServices;
@@ -14,6 +14,6 @@ namespace Runtime.Components
     {
         public TMP_Text Name;
         public Transform RootStarsTransform;
-        public StarComponent[] Stars;
+        public List<StarComponent> Stars;
     }
 }
