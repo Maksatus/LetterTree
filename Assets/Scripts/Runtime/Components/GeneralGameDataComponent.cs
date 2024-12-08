@@ -12,7 +12,6 @@ namespace Runtime.Components
     public struct GeneralGameDataComponent : IComponent
     {
         public string RelativePath;
-        public string OutputPathFile;
         public UserProvider RefUserProvider;
         public Transform RootUsers;
         public StarProvider RefStar;

@@ -42,7 +42,6 @@ namespace Runtime.Systems
 
 
             var outputFilePath = Path.Combine(Application.dataPath, "..", "Output_" + dataComponent.RelativePath);
-            dataComponent.OutputPathFile = outputFilePath;
             WriteCsv(outputFilePath, rows);
         }
 
