@@ -13,5 +13,6 @@ namespace Runtime.Components
     {
         public Button RollButton;
         public RectTransform[] Chars;
+        public RectTransform Arrow;
     }
 }

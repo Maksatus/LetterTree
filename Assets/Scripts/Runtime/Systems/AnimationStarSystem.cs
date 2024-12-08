@@ -23,14 +23,14 @@ namespace Runtime.Systems
 
         private const float DestinationRadius = 0.1f;
         private const float DelayRate = 0.00f;
-        private const float MaxSpeed = 0.085f;
+        private const float MaxSpeed = 0.115f;
 
         public void OnAwake()
         {
-            _camera = Camera.main;
             var generalGameDataComponent = World.Filter.With<GeneralGameDataComponent>().Build().First();
             ref var data = ref generalGameDataComponent.GetComponent<GeneralGameDataComponent>();
             _vfxStar = Object.Instantiate(data.VfxStars);
+            _camera = data.Camera;
         }
 
         public void OnUpdate(float deltaTime)

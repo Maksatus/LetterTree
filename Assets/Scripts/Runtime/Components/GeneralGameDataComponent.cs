@@ -17,6 +17,8 @@ namespace Runtime.Components
         public StarProvider RefStar;
         [SerializeField] private string Chars;
         public ParticleSystem VfxStars;
+        public Transform VfxMouseTransform;
+        public Camera Camera;
 
         public char GetChar(int index)
         {

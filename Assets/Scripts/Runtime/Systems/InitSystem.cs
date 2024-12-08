@@ -16,14 +16,17 @@ namespace Runtime.Systems
         public override void OnAwake()
         {
             Application.targetFrameRate = 60;
+            
             var readExelSystem = new ReadExelSystem();
             var generatorNameListSystem = new GeneratorNameListSystem();
             var rollSystem = new RollSystem();
+            var mouseSystem = new MouseSystem();
           
             _systemsGroup = World.CreateSystemsGroup();
             _systemsGroup.AddInitializer(readExelSystem);
             _systemsGroup.AddInitializer(generatorNameListSystem);
             
+            _systemsGroup.AddSystem(mouseSystem);
             _systemsGroup.AddSystem(rollSystem);
             _systemsGroup.Initialize();
             
